@@ -67,19 +67,23 @@ export function VoiceControl({
     if (isListening) {
       voiceManager.stop();
       setIsListening(false);
-      toast({
-        title: "Voice Assistant Stopped",
-        description: "No longer listening for commands",
-      });
       voiceManager.speak("Voice assistant deactivated");
+      setTimeout(() => {
+        toast({
+          title: "Voice Assistant Stopped",
+          description: "No longer listening for commands",
+        });
+      }, 100);
     } else {
       voiceManager.start();
       setIsListening(true);
-      toast({
-        title: "Voice Assistant Active",
-        description: "Listening for commands...",
-      });
-      voiceManager.speak("Voice assistant activated. How can I help you?");
+      setTimeout(() => {
+        voiceManager.speak("Voice assistant activated. How can I help you?");
+        toast({
+          title: "Voice Assistant Active",
+          description: "Listening for commands...",
+        });
+      }, 100);
     }
   };
 

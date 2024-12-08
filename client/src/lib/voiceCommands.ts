@@ -12,6 +12,9 @@ class VoiceCommandManager {
     this.commandHandler = commandHandler;
     this.synthesis = window.speechSynthesis;
     
+    // Cancel any ongoing speech
+    this.synthesis.cancel();
+    
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       this.recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       this.setupRecognition();
@@ -68,11 +71,28 @@ class VoiceCommandManager {
   }
 
   public speak(text: string) {
+    // Cancel any ongoing speech
+    this.synthesis.cancel();
+    
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.volume = 1;
     utterance.rate = 1;
     utterance.pitch = 1;
-    this.synthesis.speak(utterance);
+    utterance.lang = 'en-US';
+    
+    // Add error handling
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event);
+    };
+    
+    // Ensure voices are loaded
+    if (this.synthesis.getVoices().length === 0) {
+      this.synthesis.addEventListener('voiceschanged', () => {
+        this.synthesis.speak(utterance);
+      }, { once: true });
+    } else {
+      this.synthesis.speak(utterance);
+    }
   }
 
   public isSupported(): boolean {
