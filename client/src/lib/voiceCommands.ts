@@ -25,14 +25,26 @@ class VoiceCommandManager {
     this.recognition.interimResults = false;
     this.recognition.lang = 'en-US';
 
-    this.recognition.onresult = (event) => {
-      const command = event.results[event.results.length - 1][0].transcript.toLowerCase();
-      this.commandHandler(command);
+    this.recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const result = event.results[event.results.length - 1];
+      if (result.isFinal) {
+        const command = result[0].transcript.toLowerCase();
+        console.log('Voice command received:', command);
+        this.speak(`Processing command: ${command}`);
+        this.commandHandler(command);
+      }
     };
 
-    this.recognition.onerror = (event) => {
+    this.recognition.onerror = (event: SpeechRecognitionError) => {
       console.error('Speech recognition error:', event.error);
-      this.speak('Sorry, I had trouble hearing you.');
+      this.speak('Sorry, I had trouble hearing you. Please try again.');
+    };
+
+    this.recognition.onend = () => {
+      if (this.isListening) {
+        console.log('Restarting recognition...');
+        this.recognition?.start();
+      }
     };
   }
 

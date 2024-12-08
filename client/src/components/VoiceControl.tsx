@@ -16,14 +16,26 @@ export function VoiceControl({ onSearch, onNavigate }: VoiceControlProps) {
 
   useEffect(() => {
     const manager = new VoiceCommandManager((command) => {
-      if (command.includes('search for')) {
-        const query = command.replace('search for', '').trim();
+      console.log('Processing command:', command);
+      
+      if (command.includes('search for') || command.includes('find')) {
+        const query = command
+          .replace('search for', '')
+          .replace('find', '')
+          .trim();
         onSearch(query);
         manager.speak(`Searching for ${query}`);
-      } else if (command.includes('go to')) {
-        const path = command.replace('go to', '').trim();
+      } else if (command.includes('go to') || command.includes('open')) {
+        const path = command
+          .replace('go to', '')
+          .replace('open', '')
+          .trim();
         onNavigate(path);
         manager.speak(`Navigating to ${path}`);
+      } else if (command.includes('help')) {
+        manager.speak('You can say: search for products, go to products, or find jackets');
+      } else {
+        manager.speak('Sorry, I didn\'t understand that command. Try saying help for available commands.');
       }
     });
 
