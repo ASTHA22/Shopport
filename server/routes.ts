@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { db } from "../db";
 import { products, cartItems } from "@db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export function registerRoutes(app: Express) {
   // Get products with optional search
@@ -58,11 +58,30 @@ export function registerRoutes(app: Express) {
   app.post("/api/cart", async (req, res) => {
     const { productId, quantity, sessionId } = req.body;
     try {
-      const item = await db.insert(cartItems)
-        .values({ productId, quantity, sessionId })
-        .returning();
-      res.json(item[0]);
+      // Check if item already exists in cart
+      const existingItem = await db.select()
+        .from(cartItems)
+        .where(and(
+          eq(cartItems.productId, productId),
+          eq(cartItems.sessionId, sessionId)
+        ));
+
+      if (existingItem.length > 0) {
+        // Update existing item quantity
+        const updated = await db.update(cartItems)
+          .set({ quantity: existingItem[0].quantity + quantity })
+          .where(eq(cartItems.id, existingItem[0].id))
+          .returning();
+        res.json(updated[0]);
+      } else {
+        // Create new item
+        const item = await db.insert(cartItems)
+          .values({ productId, quantity, sessionId })
+          .returning();
+        res.json(item[0]);
+      }
     } catch (error) {
+      console.error('Error adding to cart:', error);
       res.status(500).json({ error: "Failed to add item to cart" });
     }
   });

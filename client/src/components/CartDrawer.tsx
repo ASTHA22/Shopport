@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 interface CartItem {
   id: number;
@@ -24,6 +24,12 @@ export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const sessionId = "temp-session"; // In a real app, this would be a proper session ID
+  
+  // Calculate total items in cart
+  const cartCount = useCallback((items?: CartItem[]) => {
+    if (!items) return 0;
+    return items.reduce((sum, item) => sum + item.quantity, 0);
+  }, []);
 
   const { data: cartItems, isLoading: isLoadingCart } = useQuery({
     queryKey: ["cart", sessionId],
@@ -40,13 +46,23 @@ export function CartDrawer() {
 
   const updateQuantity = useMutation({
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
-      const response = await fetch(`/api/cart/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity }),
-      });
-      if (!response.ok) throw new Error("Failed to update quantity");
-      return response.json();
+      if (quantity <= 0) {
+        // Remove item if quantity is 0 or negative
+        const response = await fetch(`/api/cart/${id}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) throw new Error("Failed to remove item");
+        return null;
+      } else {
+        // Update quantity
+        const response = await fetch(`/api/cart/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity }),
+        });
+        if (!response.ok) throw new Error("Failed to update quantity");
+        return response.json();
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -73,9 +89,16 @@ export function CartDrawer() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon">
-          <ShoppingCart className="h-5 w-5" />
-        </Button>
+        <div className="relative">
+          <Button variant="outline" size="icon">
+            <ShoppingCart className="h-5 w-5" />
+          </Button>
+          {cartItems && cartCount(cartItems) > 0 && (
+            <div className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+              {cartCount(cartItems)}
+            </div>
+          )}
+        </div>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
