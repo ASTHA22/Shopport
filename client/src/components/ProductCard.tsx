@@ -48,7 +48,7 @@ export function ProductCard({
       </div>
       <CardHeader>
         <CardTitle className="text-lg">{name}</CardTitle>
-        <CardDescription>${price.toFixed(2)}</CardDescription>
+        <CardDescription>${Number(price).toFixed(2)}</CardDescription>
       </CardHeader>
       <CardContent>
         <p className="text-sm text-gray-600">{description}</p>

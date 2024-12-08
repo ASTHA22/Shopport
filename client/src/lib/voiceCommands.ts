@@ -1,3 +1,5 @@
+import type { SpeechRecognition, SpeechRecognitionEvent, SpeechRecognitionError } from './types';
+
 type CommandHandler = (command: string) => void;
 
 class VoiceCommandManager {
