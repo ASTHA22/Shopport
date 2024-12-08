@@ -5,7 +5,7 @@ export function Hero() {
     <div className="relative h-[600px] overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1652517457739-9443343b803d"
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070"
           alt="Fashion model"
           className="w-full h-full object-cover"
         />

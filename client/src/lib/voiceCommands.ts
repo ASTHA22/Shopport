@@ -77,8 +77,18 @@ class VoiceCommandManager {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.volume = 1;
     utterance.rate = 1;
-    utterance.pitch = 1;
+    utterance.pitch = 1.2; // Slightly higher pitch for female voice
     utterance.lang = 'en-US';
+    
+    // Try to set a female voice
+    const voices = this.synthesis.getVoices();
+    const femaleVoice = voices.find(voice => 
+      voice.name.toLowerCase().includes('female') || 
+      voice.name.toLowerCase().includes('samantha')
+    );
+    if (femaleVoice) {
+      utterance.voice = femaleVoice;
+    }
     
     // Add error handling
     utterance.onerror = (event) => {
@@ -86,8 +96,16 @@ class VoiceCommandManager {
     };
     
     // Ensure voices are loaded
-    if (this.synthesis.getVoices().length === 0) {
+    if (voices.length === 0) {
       this.synthesis.addEventListener('voiceschanged', () => {
+        const updatedVoices = this.synthesis.getVoices();
+        const updatedFemaleVoice = updatedVoices.find(voice => 
+          voice.name.toLowerCase().includes('female') || 
+          voice.name.toLowerCase().includes('samantha')
+        );
+        if (updatedFemaleVoice) {
+          utterance.voice = updatedFemaleVoice;
+        }
         this.synthesis.speak(utterance);
       }, { once: true });
     } else {

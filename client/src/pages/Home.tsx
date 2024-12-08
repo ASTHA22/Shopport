@@ -38,6 +38,11 @@ export function Home() {
       title: "Searching",
       description: `Searching for: ${query}`,
     });
+    // Scroll to the products section
+    document.querySelector('.featured-products')?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   }, [toast]);
 
   const handleNavigate = useCallback((path: string) => {
@@ -56,8 +61,8 @@ export function Home() {
       <main className="pt-16">
         <Hero />
         
-        <section className="container mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
+        <section className="container mx-auto px-4 py-16 featured-products">
+          <h2 className="text-3xl font-bold mb-8">{searchQuery ? `Search Results: ${searchQuery}` : 'Featured Products'}</h2>
           <ProductGrid onAddToCart={handleAddToCart} searchQuery={searchQuery} />
         </section>
 
