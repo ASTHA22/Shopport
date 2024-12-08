@@ -2,10 +2,12 @@ import { ProductGrid } from "../components/ProductGrid";
 import { VoiceControl } from "../components/VoiceControl";
 import { CartDrawer } from "../components/CartDrawer";
 import { useToast } from "@/hooks/use-toast";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLocation } from "wouter";
+import { queryClient } from "../lib/queryClient";
 
 export function Products() {
+  const [isListening, setIsListening] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
@@ -55,6 +57,8 @@ export function Products() {
         <VoiceControl
           onSearch={handleSearch}
           onNavigate={handleNavigate}
+          isListening={isListening}
+          setIsListening={setIsListening}
         />
       </main>
     </div>

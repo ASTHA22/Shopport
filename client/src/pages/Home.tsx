@@ -5,6 +5,7 @@ import { CartDrawer } from "../components/CartDrawer";
 import { useToast } from "@/hooks/use-toast";
 import { useCallback, useState } from "react";
 import { useLocation } from "wouter";
+import { queryClient } from "../lib/queryClient";
 
 export function Home() {
   const { toast } = useToast();
