@@ -11,13 +11,17 @@ interface Product {
 
 interface ProductGridProps {
   onAddToCart: (id: number) => void;
+  searchQuery?: string;
 }
 
-export function ProductGrid({ onAddToCart }: ProductGridProps) {
+export function ProductGrid({ onAddToCart, searchQuery = "" }: ProductGridProps) {
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", searchQuery],
     queryFn: async () => {
-      const response = await fetch("/api/products");
+      const url = searchQuery 
+        ? `/api/products?search=${encodeURIComponent(searchQuery)}`
+        : "/api/products";
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }

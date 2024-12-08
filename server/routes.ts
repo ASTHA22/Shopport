@@ -4,11 +4,22 @@ import { products, cartItems } from "@db/schema";
 import { eq } from "drizzle-orm";
 
 export function registerRoutes(app: Express) {
-  // Get all products
+  // Get products with optional search
   app.get("/api/products", async (req, res) => {
     try {
+      const searchQuery = req.query.search?.toString().toLowerCase();
       const allProducts = await db.select().from(products);
-      res.json(allProducts);
+      
+      if (searchQuery) {
+        const filteredProducts = allProducts.filter(product => 
+          product.name.toLowerCase().includes(searchQuery) ||
+          product.description.toLowerCase().includes(searchQuery) ||
+          product.category.toLowerCase().includes(searchQuery)
+        );
+        res.json(filteredProducts);
+      } else {
+        res.json(allProducts);
+      }
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch products" });
     }

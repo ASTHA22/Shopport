@@ -3,12 +3,13 @@ import { ProductGrid } from "../components/ProductGrid";
 import { VoiceControl } from "../components/VoiceControl";
 import { CartDrawer } from "../components/CartDrawer";
 import { useToast } from "@/hooks/use-toast";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLocation } from "wouter";
 
 export function Home() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleAddToCart = async (productId: number) => {
     try {
@@ -31,11 +32,11 @@ export function Home() {
   };
 
   const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
     toast({
       title: "Searching",
       description: `Searching for: ${query}`,
     });
-    // Implement search functionality
   }, [toast]);
 
   const handleNavigate = useCallback((path: string) => {
@@ -56,7 +57,7 @@ export function Home() {
         
         <section className="container mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
-          <ProductGrid onAddToCart={handleAddToCart} />
+          <ProductGrid onAddToCart={handleAddToCart} searchQuery={searchQuery} />
         </section>
 
         <VoiceControl
