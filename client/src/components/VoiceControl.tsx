@@ -55,7 +55,14 @@ export function VoiceControl({
   }, [onSearch, onNavigate]);
 
   const toggleListening = () => {
-    if (!voiceManager) return;
+    if (!voiceManager) {
+      toast({
+        title: "Error",
+        description: "Voice recognition is not supported in your browser",
+        variant: "destructive"
+      });
+      return;
+    }
 
     if (isListening) {
       voiceManager.stop();
@@ -64,6 +71,7 @@ export function VoiceControl({
         title: "Voice Assistant Stopped",
         description: "No longer listening for commands",
       });
+      voiceManager.speak("Voice assistant deactivated");
     } else {
       voiceManager.start();
       setIsListening(true);
