@@ -22,9 +22,12 @@ export function InstallPrompt() {
           <DialogTitle>Install Shopport on your device</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center space-y-6 py-4">
-          <div className="relative w-48 h-48 bg-white p-4 rounded-lg shadow-sm">
-            <p className="text-sm text-center text-gray-500 absolute inset-0 flex items-center justify-center">
-              Scan with your phone's camera
+          <div className="text-center mb-4">
+            <p className="text-sm text-gray-600">
+              Visit this website on your mobile device:
+            </p>
+            <p className="font-medium mt-2 text-primary">
+              {window.location.origin}
             </p>
           </div>
           <div className="space-y-4">
