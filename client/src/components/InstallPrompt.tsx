@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SmartphoneIcon } from "lucide-react";
+import { QRCodeSVG } from 'qrcode.react';
 
 export function InstallPrompt() {
   return (
@@ -23,11 +24,19 @@ export function InstallPrompt() {
         </DialogHeader>
         <div className="flex flex-col items-center space-y-6 py-4">
           <div className="text-center mb-4">
-            <p className="text-sm text-gray-600">
-              Visit this website on your mobile device:
+            <p className="text-sm text-gray-600 mb-4">
+              Scan this QR code with your phone's camera:
             </p>
-            <p className="font-medium mt-2 text-primary">
-              {window.location.origin}
+            <div className="bg-white p-4 rounded-lg shadow-sm inline-block">
+              <QRCodeSVG 
+                value={window.location.origin} 
+                size={180}
+                level="H"
+                includeMargin
+              />
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              or visit: <span className="font-medium">{window.location.origin}</span>
             </p>
           </div>
           <div className="space-y-4">
