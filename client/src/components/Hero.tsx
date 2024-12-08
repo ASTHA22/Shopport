@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 
-export function Hero() {
+interface HeroProps {
+  onStartVoiceCommand: () => void;
+}
+
+export function Hero({ onStartVoiceCommand }: HeroProps) {
   return (
     <div className="relative h-[600px] overflow-hidden">
       <div className="absolute inset-0">
@@ -22,13 +26,18 @@ export function Hero() {
               dresses" or "Search for jackets" to get started.
             </p>
             <div className="space-x-4">
-              <Button size="lg" className="bg-white text-black hover:bg-gray-100">
+              <Button 
+                size="lg" 
+                className="bg-white text-black hover:bg-gray-100"
+                onClick={() => window.location.href = '/products'}
+              >
                 Shop Now
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="bg-white/10 text-white border-white hover:bg-white/20"
+                onClick={onStartVoiceCommand}
               >
                 Try Voice Commands
               </Button>

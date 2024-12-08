@@ -10,6 +10,7 @@ export function Home() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isListening, setIsListening] = useState(false);
 
   const handleAddToCart = async (productId: number) => {
     try {
@@ -53,7 +54,7 @@ export function Home() {
       </header>
 
       <main className="pt-16">
-        <Hero />
+        <Hero onStartVoiceCommand={() => setIsListening(true)} />
         
         <section className="container mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
@@ -63,6 +64,8 @@ export function Home() {
         <VoiceControl
           onSearch={handleSearch}
           onNavigate={handleNavigate}
+          isListening={isListening}
+          setIsListening={setIsListening}
         />
       </main>
     </div>

@@ -7,10 +7,16 @@ import { useToast } from '@/hooks/use-toast';
 interface VoiceControlProps {
   onSearch: (query: string) => void;
   onNavigate: (path: string) => void;
+  isListening: boolean;
+  setIsListening: (listening: boolean) => void;
 }
 
-export function VoiceControl({ onSearch, onNavigate }: VoiceControlProps) {
-  const [isListening, setIsListening] = useState(false);
+export function VoiceControl({ 
+  onSearch, 
+  onNavigate, 
+  isListening, 
+  setIsListening 
+}: VoiceControlProps) {
   const [voiceManager, setVoiceManager] = useState<VoiceCommandManager | null>(null);
   const { toast } = useToast();
 
