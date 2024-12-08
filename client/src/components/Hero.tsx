@@ -28,7 +28,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-white border-white hover:bg-white/10"
+                className="bg-white/10 text-white border-white hover:bg-white/20"
               >
                 Try Voice Commands
               </Button>
