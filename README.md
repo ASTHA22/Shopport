@@ -1,114 +1,102 @@
-# Shopport - Voice-Assisted Shopping Platform
+# Shopport - Voice-Assisted Shopping Assistant
 
-Shopport is a modern, voice-controlled shopping platform that allows users to browse and purchase apparel using natural language commands. It combines the power of voice recognition with an intuitive shopping experience.
+A modern voice-controlled shopping application for apparel with a beautiful UI. Shop hands-free using natural voice commands while enjoying a responsive and intuitive interface.
 
-## 🌟 Features
+![Shopport Screenshot](https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070)
 
-- **Voice Control**: Natural language commands for browsing and shopping
-- **Smart Search**: AI-powered product search and recommendations
-- **Real-time Cart Management**: Dynamic cart updates with instant price calculations
-- **Responsive Design**: Beautiful UI that works on all devices
-- **PWA Support**: Install as a standalone app on mobile devices
+## Features
 
-## 🛠️ Tech Stack
+- 🗣️ **Voice Control**: Natural language voice commands for browsing and shopping
+- 🛍️ **Smart Product Search**: Search products using voice or text
+- 🛒 **Real-time Cart Management**: Add, update, or remove items seamlessly
+- 📱 **PWA Support**: Install as a native app on any device
+- 🎯 **Responsive Design**: Beautiful UI that works on all screen sizes
+- 🔍 **Natural Language Processing**: Smart command interpretation using Compromise.js
 
-### Frontend
-- React 18 with TypeScript
-- Vite for blazing-fast development
-- Shadcn UI + Tailwind CSS for styling
-- React Query for state management
-- Wouter for lightweight routing
+## Tech Stack
 
-### Backend
-- Express.js server
-- PostgreSQL database
-- Drizzle ORM for type-safe database operations
-- WebSocket support for real-time features
+- **Frontend**:
+  - React with TypeScript
+  - Shadcn UI Components
+  - TailwindCSS for styling
+  - React Query for state management
+  - Wouter for routing
 
-### AI & Voice Features
-- Web Speech API for voice recognition
-- Natural Language Processing using Compromise.js
-- (Planned) Integration with AI services for:
-  - Personalized product recommendations
-  - Smart size/fit assistance
-  - Advanced voice analytics
+- **Backend**:
+  - Express.js
+  - PostgreSQL with Drizzle ORM
+  - Natural Language Processing with Compromise.js
 
-## 🚀 Getting Started
+## Voice Commands
 
-### Prerequisites
-- Node.js v20 or higher
-- PostgreSQL 16
-- npm or yarn package manager
-
-### Installation
-
-1. Clone the repository
-\`\`\`bash
-git clone https://github.com/yourusername/shopport.git
-cd shopport
-\`\`\`
-
-2. Install dependencies
-\`\`\`bash
-npm install
-\`\`\`
-
-3. Set up environment variables
-\`\`\`bash
-# Create a .env file with the following
-DATABASE_URL=postgresql://user:password@localhost:5432/shopport
-\`\`\`
-
-4. Initialize the database
-\`\`\`bash
-npm run db:push
-\`\`\`
-
-5. Start the development server
-\`\`\`bash
-npm run dev
-\`\`\`
-
-The application will be available at \`http://localhost:5000\`
-
-## 📖 Voice Commands
-
-Users can interact with the application using various voice commands:
-
+The application responds to natural voice commands such as:
+- "Show me jackets"
 - "Search for blue shirts"
-- "Show me dresses"
-- "Find jackets under $100"
-- "Add this item to cart"
-- "Navigate to products"
+- "Add this to cart"
+- "Go to products"
 
-## 🔄 Workflow
+## Getting Started
 
-The application follows a modern development workflow:
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd shopport
+```
 
-1. **Development**: \`npm run dev\`
-2. **Building**: \`npm run build\`
-3. **Production**: \`npm run start\`
+2. Install dependencies:
+```bash
+npm install
+```
 
-## 🔜 Upcoming Features
+3. Set up the database:
+```bash
+# Create a PostgreSQL database and set the DATABASE_URL environment variable
+npm run db:push
+```
 
-- Integration with OpenAI/Anthropic for advanced product recommendations
+4. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5000`
+
+## Development
+
+The project uses a modern full-stack JavaScript architecture:
+- Frontend code is in `client/src`
+- Backend routes are in `server/routes.ts`
+- Database schema is in `db/schema.ts`
+
+## Progressive Web App
+
+Shopport is a Progressive Web App (PWA) that can be installed on:
+- iOS devices via Safari
+- Android devices via Chrome
+- Desktop via supported browsers
+
+## Deployment
+
+The application is configured for deployment on various platforms:
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm run start
+```
+
+## Future Features
+
+- Voice-based size recommendations
 - Virtual try-on capabilities
-- Voice-based size and fit assistance
-- Advanced voice analytics for better user understanding
-- Personalized shopping experiences based on user preferences
+- Advanced voice analytics
+- Personalized product recommendations
 
-## 📱 Progressive Web App
-
-Shopport is available as a Progressive Web App (PWA), allowing users to:
-- Install it on their devices
-- Access it offline
-- Receive push notifications
-- Get app-like experience on mobile devices
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
