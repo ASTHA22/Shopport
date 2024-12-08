@@ -1,10 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-interface HeroProps {
-  onStartVoiceCommand: () => void;
-}
-
-export function Hero({ onStartVoiceCommand }: HeroProps) {
+export function Hero() {
   return (
     <div className="relative h-[600px] overflow-hidden">
       <div className="absolute inset-0">
@@ -32,14 +28,6 @@ export function Hero({ onStartVoiceCommand }: HeroProps) {
                 onClick={() => window.location.href = '/products'}
               >
                 Shop Now
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white/10 text-white border-white hover:bg-white/20"
-                onClick={onStartVoiceCommand}
-              >
-                Try Voice Commands
               </Button>
             </div>
           </div>

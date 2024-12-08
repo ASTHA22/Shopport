@@ -54,7 +54,7 @@ export function Home() {
       </header>
 
       <main className="pt-16">
-        <Hero onStartVoiceCommand={() => setIsListening(true)} />
+        <Hero />
         
         <section className="container mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
