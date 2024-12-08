@@ -29,14 +29,27 @@ export function registerRoutes(app: Express) {
     }
   });
 
-  // Get cart items
+  // Get cart items with product details
   app.get("/api/cart/:sessionId", async (req, res) => {
     try {
-      const items = await db.select()
-        .from(cartItems)
-        .where(eq(cartItems.sessionId, req.params.sessionId));
+      const items = await db.select({
+        id: cartItems.id,
+        productId: cartItems.productId,
+        quantity: cartItems.quantity,
+        product: {
+          name: products.name,
+          price: products.price,
+          imageUrl: products.imageUrl
+        }
+      })
+      .from(cartItems)
+      .innerJoin(products, eq(cartItems.productId, products.id))
+      .where(eq(cartItems.sessionId, req.params.sessionId));
+      
+      console.log('Cart items fetched:', items);
       res.json(items);
     } catch (error) {
+      console.error('Error fetching cart items:', error);
       res.status(500).json({ error: "Failed to fetch cart items" });
     }
   });

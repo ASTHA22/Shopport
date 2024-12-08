@@ -14,7 +14,7 @@ export function Home() {
 
   const handleAddToCart = async (productId: number) => {
     try {
-      await fetch("/api/cart", {
+      const response = await fetch("/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -23,7 +23,20 @@ export function Home() {
           sessionId: "temp-session",
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+      }
+
+      // Invalidate the cart query to trigger a refresh
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      
+      toast({
+        title: "Success",
+        description: "Item added to cart successfully",
+      });
     } catch (error) {
+      console.error('Error adding to cart:', error);
       toast({
         title: "Error",
         description: "Failed to add item to cart",

@@ -25,13 +25,17 @@ export function CartDrawer() {
   const queryClient = useQueryClient();
   const sessionId = "temp-session"; // In a real app, this would be a proper session ID
 
-  const { data: cartItems } = useQuery({
+  const { data: cartItems, isLoading: isLoadingCart } = useQuery({
     queryKey: ["cart", sessionId],
     queryFn: async () => {
       const response = await fetch(`/api/cart/${sessionId}`);
       if (!response.ok) throw new Error("Failed to fetch cart");
-      return response.json() as Promise<CartItem[]>;
+      const data = await response.json();
+      console.log('Fetched cart items:', data);
+      return data as CartItem[];
     },
+    refetchOnWindowFocus: true,
+    staleTime: 1000, // Refetch after 1 second
   });
 
   const updateQuantity = useMutation({
