@@ -1,7 +1,7 @@
 {
-  "name": "VoxStyle",
-  "short_name": "VoxStyle",
-  "description": "Your voice-powered fashion assistant",
+  "name": "Shopport",
+  "short_name": "Shopport",
+  "description": "Your voice-powered shopping support assistant",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
