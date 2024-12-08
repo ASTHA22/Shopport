@@ -7,6 +7,7 @@ export function registerRoutes(app: Express) {
   // Get products with optional search
   app.get("/api/products", async (req, res) => {
     try {
+      console.log("Received search query:", req.query.search);
       const searchQuery = req.query.search?.toString().toLowerCase();
       const allProducts = await db.select().from(products);
       
@@ -16,11 +17,14 @@ export function registerRoutes(app: Express) {
           product.description.toLowerCase().includes(searchQuery) ||
           product.category.toLowerCase().includes(searchQuery)
         );
+        console.log(`Found ${filteredProducts.length} products matching "${searchQuery}"`);
         res.json(filteredProducts);
       } else {
+        console.log(`Returning all ${allProducts.length} products`);
         res.json(allProducts);
       }
     } catch (error) {
+      console.error("Error fetching products:", error);
       res.status(500).json({ error: "Failed to fetch products" });
     }
   });

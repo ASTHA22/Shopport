@@ -15,9 +15,10 @@ interface ProductGridProps {
 }
 
 export function ProductGrid({ onAddToCart, searchQuery = "" }: ProductGridProps) {
-  const { data: products, isLoading } = useQuery({
+  const { data: products, isLoading, error } = useQuery({
     queryKey: ["products", searchQuery],
     queryFn: async () => {
+      console.log("Fetching products with search query:", searchQuery);
       const url = searchQuery 
         ? `/api/products?search=${encodeURIComponent(searchQuery)}`
         : "/api/products";
@@ -25,9 +26,21 @@ export function ProductGrid({ onAddToCart, searchQuery = "" }: ProductGridProps)
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
-      return response.json() as Promise<Product[]>;
+      const data = await response.json() as Product[];
+      console.log("Fetched products:", data);
+      return data;
     },
+    staleTime: 1000 * 60, // Cache for 1 minute
   });
+
+  if (error) {
+    console.error("Error fetching products:", error);
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">Error loading products. Please try again.</p>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
