@@ -2,8 +2,9 @@
 
 A modern voice-controlled shopping application for apparel with a beautiful UI. Shop hands-free using natural voice commands while enjoying a responsive and intuitive interface.
 
-# Demo link: https://drive.google.com/file/d/1gLEuX40PlhmoKtinK02-pSy7eXRe4kYH/view?usp=drive_link
-# Webpage link: https://34680d0d-3e53-4650-808e-1197903732ff-00-101n04iji6inm.kirk.repl.co
+Demo link: https://drive.google.com/file/d/1gLEuX40PlhmoKtinK02-pSy7eXRe4kYH/view?usp=drive_link 
+
+Webpage link: https://34680d0d-3e53-4650-808e-1197903732ff-00-101n04iji6inm.kirk.repl.co
 
 ![Shopport Screenshot](https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070)
 
