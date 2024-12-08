@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Mic, MicOff } from 'lucide-react';
 import VoiceCommandManager from '../lib/voiceCommands';
 import { useToast } from '@/hooks/use-toast';
+import { aiAgent } from '../lib/aiAgent';
 
 interface VoiceControlProps {
   onSearch: (query: string) => void;
@@ -21,27 +22,30 @@ export function VoiceControl({
   const { toast } = useToast();
 
   useEffect(() => {
-    const manager = new VoiceCommandManager((command) => {
+    const manager = new VoiceCommandManager(async (command) => {
       console.log('Processing command:', command);
       
-      if (command.includes('search for') || command.includes('find')) {
-        const query = command
-          .replace('search for', '')
-          .replace('find', '')
-          .trim();
-        onSearch(query);
-        manager.speak(`Searching for ${query}`);
-      } else if (command.includes('go to') || command.includes('open')) {
-        const path = command
-          .replace('go to', '')
-          .replace('open', '')
-          .trim();
-        onNavigate(path);
-        manager.speak(`Navigating to ${path}`);
-      } else if (command.includes('help')) {
-        manager.speak('You can say: search for products, go to products, or find jackets');
-      } else {
-        manager.speak('Sorry, I didn\'t understand that command. Try saying help for available commands.');
+      const { intent, entities, response } = await aiAgent.processCommand(command);
+      console.log('AI processed command:', { intent, entities, response });
+
+      switch (intent) {
+        case 'search':
+          if (entities.product) {
+            onSearch(entities.product);
+            manager.speak(response);
+          }
+          break;
+        case 'navigate':
+          if (entities.product) {
+            onNavigate(entities.product);
+            manager.speak(response);
+          }
+          break;
+        case 'help':
+          manager.speak('You can say: search for products, go to products, find jackets, or show me blue shirts');
+          break;
+        default:
+          manager.speak(response);
       }
     });
 
