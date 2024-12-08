@@ -2,6 +2,7 @@ import { Hero } from "../components/Hero";
 import { ProductGrid } from "../components/ProductGrid";
 import { VoiceControl } from "../components/VoiceControl";
 import { CartDrawer } from "../components/CartDrawer";
+import { InstallPrompt } from "../components/InstallPrompt";
 import { useToast } from "@/hooks/use-toast";
 import { useCallback, useState } from "react";
 import { useLocation } from "wouter";
@@ -68,7 +69,10 @@ export function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Voice Shop</h1>
-          <CartDrawer />
+          <div className="flex items-center gap-4">
+            <InstallPrompt />
+            <CartDrawer />
+          </div>
         </div>
       </header>
 
