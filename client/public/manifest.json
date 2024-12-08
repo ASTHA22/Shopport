@@ -1,7 +1,7 @@
 {
-  "name": "Voice Shop",
-  "short_name": "VShop",
-  "description": "Voice-assisted shopping experience for apparel",
+  "name": "VoxStyle",
+  "short_name": "VoxStyle",
+  "description": "Your voice-powered fashion assistant",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
